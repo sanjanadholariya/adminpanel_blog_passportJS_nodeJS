@@ -1,0 +1,201 @@
+<%- include('header') %>
+  <!-- <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blogs</title>
+  <link rel="stylesheet" href="/css/view.css"> -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    :root {
+      --primary: #8b5e3c;
+      --cream: #f5f1e9;
+      --accent: #d4a373;
+      --text: #3c2f2f;
+      --card-bg: #fffaf5;
+      --shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      --radius: 14px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: var(--cream);
+      color: var(--text);
+    }
+
+    .header {
+      background: var(--primary);
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header .btn {
+      background: var(--accent);
+      color: white;
+      padding: 10px 18px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .header .btn:hover {
+      background: #a86f4c;
+    }
+
+    .blog-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      padding: 40px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 18px;
+    }
+
+    .card-content h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: var(--primary);
+    }
+
+    .tags {
+      list-style: none;
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .tags li {
+      background: var(--accent);
+      color: white;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+
+    .read-more {
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 8px;
+    }
+  </style>
+  </head>
+
+  <body>
+
+    <!-- Page wrapper -->
+    <div class="page-wrapper">
+      <div class="container-fluid">
+
+        <!-- Page Title -->
+        <div class="row mb-4">
+          <div class="col-12 d-flex justify-content-between align-items-center">
+            <h3 class="text-primary font-weight-bold">All Blogs</h3>
+            <a href="/admin/addBlogPage" class="btn btn-success">
+              + Add Blog
+            </a>
+          </div>
+        </div>
+
+        <form class="form-inline" method="get" action="/admin/viewBlogPage">
+          <div class="input-group mb-5">
+            <input type="text" name="search" value="<%= typeof search !== 'undefined' ? search : '' %>"
+              class="form-control" placeholder="Search by Title or Description" style="min-width: 250px;">
+
+            <select name="filter" id="" class="form-control">
+              <option value="">--- Filter Category ---</option>
+              <option value="technology">Technology</option>
+              <option value="history">History</option>
+              <option value="future">Future</option>
+              <option value="news">News</option>
+              <option value="body">Body</option>
+              <option value="language">Language</option>
+            </select>
+
+
+
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+            
+            <div class="col-md-2 d-grid">
+    <input class="btn btn-secondary" type="submit" value="Reset" name="reset" >
+  </div>
+
+          </div>
+        </form>
+
+
+        <!-- Blog Grid -->
+        <div class="row">
+          <% allBlog.map((val)=> { %>
+            <div class="col-sm-6 col-md-4 col-lg-3">
+              <div class="card shadow-sm h-100">
+                <!-- Blog Image -->
+                <img src="/uploads/<%= val.image %>" class="card-img-top" style="height:180px; object-fit:cover;"
+                  alt="Blog Image">
+
+                <div class="card-body">
+                  <h4 class="card-title text-dark font-weight-bold">
+                    <%= val.title %>
+                  </h4>
+                  <h5>
+                    <%=val.category%>
+                  </h5>
+                  <p class="card-text text-muted">
+                    <%= val.description.substring(0,100) %>...
+                  </p>
+                  <a href="/admin/viewSingleBlog/<%=val._id%>" class="btn btn-primary btn-sm">
+                    View More
+                  </a>
+                  <a href="/admin/editBlogPage/<%=val._id%>" class="btn btn-outline-warning  btn-sm">
+                    Edit Blog
+                  </a>
+                  <a href="/admin/deleteBlog/<%=val._id%>" class="btn btn-outline-danger btn-sm">
+                    Delete
+                  </a>
+                </div>
+              </div>
+            </div>
+            <% }) %>
+        </div>
+
+      </div>
+    </div>
+    <!-- End Page wrapper -->
+
+    <%- include('footer') %>
+
+  </body>
+
+  </html>

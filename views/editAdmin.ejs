@@ -1,0 +1,159 @@
+<%-include('header')%>
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Form Basic</h4>
+                        <div class="ml-auto text-right">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                   <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Library</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Bread crumb and right sidebar toggle -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Start Page Content -->
+                <!-- ============================================================== -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <form class="form-horizontal" action="/admin/edit/<%=single.id%>" method="post" enctype="multipart/form-data">
+                                <div class="card-body">
+                                    <h4 class="card-title">Personal Info</h4>
+
+                                    <%let name = single.name.split(" ")%>
+                                    <div class="form-group row">
+                                        <label for="fname" class="col-sm-3 text-right control-label col-form-label">First Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="fname" value="<%=name[0]%>" id="fname" placeholder="First Name Here">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="lname" class="col-sm-3 text-right control-label col-form-label">Last Name</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control" name="lname" value="<%=name[1]%>" id="lname" placeholder="Last Name Here">
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group row">
+                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Email</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" class="form-control" name="email" id="cono1" value="<%=single.email%>" placeholder="Contact No Here">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="cono1" class="col-sm-3 text-right control-label col-form-label">Message</label>
+                                        <div class="col-sm-9">
+                                            <textarea class="form-control" name="message"><%=single.message%></textarea>
+                                        </div>
+                                    </div>
+
+                                    <%let city = ["Surat","Rajkot","Gandhinagar","Vapi","Bharuch"]%>
+
+                                    <div class="form-group row">
+                                    <label class="col-md-3 m-t-15">City</label>
+                                    <div class="col-md-9">
+                                        <select class="select2 form-control custom-select" name="city" style="width: 100%; height:36px;">
+                                            <option>Select</option>
+                                            <%city.map((city)=>{%>
+                                                <option value="<%=city%>" <% if(single.city==city){ %> selected <%}%> ><%=city%></option>
+                                            <%})%>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3">Gender</label>
+                                    <div class="col-md-9">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input" id="customControlValidation1" name="gender" value="male" <% if(single.gender=='male'){ %> checked <%}%> required>
+                                            <label class="custom-control-label" for="customControlValidation1">Male</label>
+                                        </div>
+                                         <div class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input" id="customControlValidation2" name="gender"  value="female" <% if(single.gender=='female'){ %> checked <%}%>required>
+                                            <label class="custom-control-label" for="customControlValidation2">Female</label>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3">Qualification</label>
+                                    <div class="col-md-9">
+                                        <div class="custom-control custom-checkbox mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="customControlAutosizing1" name="qualification" value="10th" <% if(single.qualification.includes('10th')){ %> checked <%}%>>
+                                            <label class="custom-control-label" for="customControlAutosizing1">10th</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="customControlAutosizing2" name="qualification" value="12th" <% if(single.qualification.includes('12th')){ %> checked <%}%>>
+                                            <label class="custom-control-label" for="customControlAutosizing2">12th</label>
+                                        </div>
+                                        <div class="custom-control custom-checkbox mr-sm-2">
+                                            <input type="checkbox" class="custom-control-input" id="customControlAutosizing3" name="qualification" value="graduation" <% if(single.qualification.includes('graduation')){ %> checked <%}%>>
+                                            <label class="custom-control-label" for="customControlAutosizing3">Graduation</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-md-3">File Upload</label>
+                                    <div class="col-md-9">
+                                        <div class="custom-file">
+                                            <input type="file" name="profile" class="custom-file-input" id="validatedCustomFile" >
+                                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                                            <img src="/uploads/<%=single.profile%>" width="50px" alt="profile">
+                                            <div class="invalid-feedback">Example invalid custom file feedback</div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                 <div class="border-top">
+                                <div class="card-body">
+                                    <input type="submit" value="Edit">
+                                </div>
+                            </div>
+                                </div>
+                               
+                                
+                            </form>
+                        </div>
+                        
+                      
+
+                    </div>
+                   
+                </div>
+                <!-- editor -->
+                
+                <!-- ============================================================== -->
+                <!-- End PAge Content -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- Right sidebar -->
+                <!-- ============================================================== -->
+                <!-- .right-sidebar -->
+                <!-- ============================================================== -->
+                <!-- End Right sidebar -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Container fluid  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            
+            <%-include('footer')%>

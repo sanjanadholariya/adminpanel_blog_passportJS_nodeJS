@@ -1,0 +1,158 @@
+<%- include('header') %>
+<style>
+  /* General */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #f4f6f8;
+  color: #2c3e50;
+}
+
+/* Header */
+header.header {
+  background: #5c3d2e;
+  color: white;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+header .logo {
+  margin: 0;
+  font-size: 24px;
+}
+header .btn {
+  background: #d4ac98;
+  color: #5c3d2e;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+header .btn:hover {
+  background: #fbdaca;
+}
+
+/* Blog Container */
+.single-blog {
+  max-width: 850px;
+  margin: 40px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+/* Blog Image */
+.single-blog .single-img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+}
+
+/* Title */
+.single-blog h1 {
+  margin: 15px 0;
+  font-size: 28px;
+  color: #5c3d2e;
+}
+
+/* Tags */
+.tags {
+  list-style: none;
+  padding: 0;
+  margin: 15px 0 25px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.tags li {
+  background: #ecc5b2;
+  color: #5c3d2e;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.2s;
+}
+.tags li:hover {
+  background: #d4ac98;
+}
+
+/* Description */
+.desc {
+  font-size: 16px;
+  line-height: 1.7;
+  text-align: justify;
+  color: #2c3e50;
+}
+
+</style>
+
+<!-- Page wrapper -->
+<div class="page-wrapper">
+  <div class="container-fluid">
+
+    <!-- Back button -->
+     <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+          <h3 class="text-primary font-weight-bold"><%=single.title%></h3>
+          <a href="/admin/viewBlogPage" class="btn btn-success">
+            ← Back to Blogs
+          </a>
+        </div>
+      </div>
+
+
+    <!-- Single Blog -->
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-md-10 col-sm-12">
+        <div class="card shadow-sm">
+          <!-- Blog Image -->
+          <img src="/uploads/<%= single.image %>" class="card-img-top" style="height:400px; object-fit:cover;" alt="Blog Image">
+
+          <p class="card-body"><strong>Create Date :-</strong>   <%= new Date(single.date).toLocaleDateString('en-GB', { 
+        weekday: 'long', 
+        day: '2-digit', 
+        month: 'short', 
+        year: 'numeric' 
+      }) %></p>
+
+          <% if(single.date!=single.editDate){ %>
+            <p class="card-body"><strong>Edit Date :-</strong> <%= new Date(single.date).toLocaleDateString('en-GB', { 
+        weekday: 'long', 
+        day: '2-digit', 
+        month: 'short', 
+        year: 'numeric' 
+      }) %></p>
+
+            <%}%>
+
+          <div class="card-body">
+            <h2 class="card-title font-weight-bold text-dark mb-3">
+              <%= single.title %>
+            </h2>
+            <h4 class="card-title font-weight-bold text-dark mb-3">
+              <%= single.category %>
+            </h4>
+
+
+            <!-- Description -->
+            <p class="card-text text-muted" style="line-height:1.7; font-size:1rem;">
+              <%= single.description %>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- End Page wrapper -->
+
+<%- include('footer') %>

@@ -1,0 +1,147 @@
+<%-include('header') %>
+    <!-- Remember to include jQuery :) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+    <!-- jQuery Modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css">
+
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">Tables</h4>
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                               <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Library</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title m-b-0">Static Table</h5>
+                        </div>
+
+                        <!-- search -->
+
+                         <form class="form-inline" method="get" action="/admin/view">
+              <div class="input-group">
+                <input 
+                  type="text" 
+                  name="search" 
+                  value="<%= typeof search !== 'undefined' ? search : '' %>" 
+                  class="form-control" 
+                  placeholder="Search by Name, Email, City" 
+                  style="min-width: 250px;"
+                >
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="submit">Search</button>
+                </div>
+              </div>
+            </form>
+
+                        
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No.</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">City</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%data.map((v,i)=>{%>
+                                    <tr>
+                                        <td>
+                                            <img src="../uploads/<%=v.profile%>" width="35px" height="35px"
+                                                style="border-radius: 50%;" alt="">
+                                        </td>
+                                        <td>
+                                            <%=v.name%>
+                                        </td>
+                                        <td>
+                                            <%=v.email%>
+                                        </td>
+                                        <td>
+                                            <%=v.city%>
+                                        </td>
+                                        <td>
+                                            <a href="/admin/delete/<%=v.id%>">
+                                                Delete
+                                            </a> ||
+                                            <a href="/admin/edit/<%=v.id%>">
+                                                Edit
+                                            </a> ||
+                                            <a href="#ex1" rel="modal:open" onclick="viewSingle('<%=v.id%>')">View</a>
+
+                                        </td>
+                                    </tr>
+                                    <%})%>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Modal HTML embedded directly into document -->
+            <div id="ex1" class="modal">
+
+                <p>Name :- <span id="adminName"></span></p>
+                <a href="#" rel="modal:close">Close</a>
+            </div>
+
+            <!-- Link to open the modal -->
+
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+
+
+
+        <%-include('footer')%>
+
+            <script>
+                const viewSingle = (id) => {
+                    //    console.log("Function called", id);
+                    // alert(id)
+                    $.ajax({
+                        url: "/admin/viewSingle/" + id,
+                        type: 'get',
+                        success: function (res) {
+                            if (res.status === 'success') {
+                                const data = res.data
+                                $('#adminName').html(data.name)
+                            }
+                            console.log(res);
+                        }
+                    })
+                }
+            </script>
